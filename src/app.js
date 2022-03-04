@@ -10,7 +10,7 @@ const usersRouter = require("./users/users.router");
 //   res.json({ data: pastes });
 // replace with what is below});
 app.use("/pastes", pastesRouter); // this is the new way of writing the router for pastes
-app.use("/users", usersRouter);
+app.use("/users", usersRouter); // this is the part in http://localhost:5000/users
 
 // Not found handler
 app.use((request, response, next) => {
