@@ -3,13 +3,14 @@ const app = express();
 app.use(express.json());
 const pastes = require("./data/pastes-data");
 const pastesRouter = require("./pastes/pastes.router"); //because the controller and route files for the /paste route was created.
-
-// TODO: Follow instructions in the checkpoint to implement ths API.
+const users = require("./data/users-data");
+const usersRouter = require("./users/users.router");
 
 // app.get("/pastes", (req, res) => {
 //   res.json({ data: pastes });
 // replace with what is below});
 app.use("/pastes", pastesRouter); // this is the new way of writing the router for pastes
+app.use("/users", usersRouter);
 
 // Not found handler
 app.use((request, response, next) => {
