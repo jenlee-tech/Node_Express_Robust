@@ -18,6 +18,7 @@ function list(req, res) {
 
 //special notes: even if it goes through each error handler, once it is fulfilled, it will stop checking each route
 
+//this function checks if the paste exist by id
 function pasteExists(req, res, next) {
   const { pasteId } = req.params;
   const foundPaste = pastes.find((paste) => paste.id === Number(pasteId));
@@ -122,6 +123,15 @@ function create(req, res) {
   res.status(201).json({ data: newPaste });
 }
 
+function destroy(req, res) {
+  const { pasteId } = req.params;
+  const index = pastes.findIndex((paste) => paste.id === Number(pasteId));
+  // `splice()` returns an array of the deleted elements, even if it is one element
+  const message = `This has been deleted: ${index}`;
+  const deletedPastes = pastes.splice(index, 1);
+  res.json({ data: message });
+}
+
 //create: this puts the middle ware and the route handler together in an array.
 module.exports = {
   create: [
@@ -150,4 +160,5 @@ module.exports = {
     expirationIsValidNumber,
     update,
   ],
+  delete: [pasteExists, destroy],
 };
