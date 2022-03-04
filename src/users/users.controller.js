@@ -24,4 +24,5 @@ module.exports = {
   list,
 
   read: [userExists, read],
+  userExists,
 };
