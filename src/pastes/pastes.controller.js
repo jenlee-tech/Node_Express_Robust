@@ -16,6 +16,39 @@ function list(req, res) {
 //   });
 // }
 
+//special notes: even if it goes through each error handler, once it is fulfilled, it will stop checking each route
+
+function pasteExists(req, res, next) {
+  const { pasteId } = req.params;
+  const foundPaste = pastes.find((paste) => paste.id === Number(pasteId));
+  if (foundPaste) {
+    return next();
+  }
+  next({
+    status: 404,
+    message: `Paste id not found: ${pasteId}`,
+  });
+}
+
+function read(req, res) {
+  const { pasteId } = req.params;
+  const foundPaste = pastes.find((paste) => paste.id === Number(pasteId));
+  res.json({ data: foundPaste });
+}
+
+function update(req, res) {
+  const { pasteId } = req.params;
+  const foundPaste = pastes.find((paste) => paste.id === Number(pasteId));
+  const { data: { name, syntax, expiration, exposure, text } = {} } = req.body;
+  // Update the paste
+  foundPaste.name = name;
+  foundPaste.syntax = syntax;
+  foundPaste.expiration = expiration;
+  foundPaste.exposure = exposure;
+  foundPaste.text = text;
+  res.json({ data: foundPaste });
+}
+
 //this function validates any property (key-value pair) that the developer wants but then exports towards the end of the file.
 function bodyDataHas(propertyName) {
   return function (req, res, next) {
@@ -85,6 +118,7 @@ function create(req, res) {
     user_id,
   };
   pastes.push(newPaste);
+  console.log(newPaste);
   res.status(201).json({ data: newPaste });
 }
 
@@ -103,4 +137,17 @@ module.exports = {
     create,
   ],
   list,
+  read: [pasteExists, read],
+  update: [
+    pasteExists,
+    bodyDataHas("name"),
+    bodyDataHas("syntax"),
+    bodyDataHas("exposure"),
+    bodyDataHas("expiration"),
+    bodyDataHas("text"),
+    exposurePropertyIsValid,
+    syntaxPropertyIsValid,
+    expirationIsValidNumber,
+    update,
+  ],
 };
