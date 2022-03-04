@@ -1,6 +1,7 @@
-# Starter Code: Robust Server Structure
+# Description
+This is for fun, practicing how to make the express server more organized.
 
-This server is intended to be run for some checkpoints in the Thinkful curriculum. If you have trouble getting the server to run, reach out for assistance.
+
 
 ## Installation
 
@@ -11,10 +12,4 @@ This server is intended to be run for some checkpoints in the Thinkful curriculu
 
 When you navigate to `localhost:5000` initially, you should see a `Not found: /` message in the browser because none of the routes have been implemented yet.
 
-## Description
 
-This project contains the minimum setup code required to run an Express API. However, only the not found and error handlers are implemented at this point.
-
-Follow the instructions in the checkpoint for implementing the API.
-
-If you have trouble, reach out for assistance.
